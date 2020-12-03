@@ -1,5 +1,11 @@
 package main
- 
+
+/*
+* Using Go binary file and encryption method to prevent Python code leakage.
+* Encrypting Python files --> Decrypting Python files --> Runing Python files --> Delete Decrypted Python files
+* Only Go binary and Decrypted Python files are left at run time and stop time.
+*/
+
 import (
     "fmt"
     "io/ioutil"
