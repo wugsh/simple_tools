@@ -20,7 +20,7 @@ import (
 )
 
 //File encryption
-func Encryptfile(fileName string, writfileName string, key []byte) (int, error) {
+func EncryptFile(fileName string, writfileName string, key []byte) (int, error) {
 	file, err:=os.Open(fileName)
 	writfile, err1:=os.Create(writfileName)
     if err!=nil {
@@ -108,8 +108,8 @@ func main() {
     PassKeyByte :=sha256.Sum224([]byte(PassKey))
 	key :=PassKeyByte[:24]
 	fmt.Println(key)
-	num1, _:= Encryptfile("main.py", "tt.py", key)
-	num2, _ := DecryptFile("tt.py", "t.py", key)
+	num1, _:= EncryptFile("PrimaryFile.py", EncryptFile.py", key)
+	num2, _ := DecryptFile("EncryptFile.py", "DecryptFile.py", key)
 	//Using a goroutine for task processing
 	go RunPython()
 	//Wait for the task to finish processing
@@ -125,7 +125,7 @@ func main() {
 
 //Execute Python program
 func RunPython() {
-	cmd := exec.Command("python3", "t3.py")
+	cmd := exec.Command("python3", "DecryptFile.py")
 	lines,_ := cmd.Output()
 	err2 := cmd.Start()
 	if err2!=nil{
