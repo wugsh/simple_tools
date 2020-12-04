@@ -107,7 +107,6 @@ func main() {
     //Generate key
     PassKeyByte :=sha256.Sum224([]byte(PassKey))
 	key :=PassKeyByte[:24]
-	fmt.Println(key)
 	num1, _:= EncryptFile("PrimaryFile.py", "EncryptFile.py", key)
 	num2, _ := DecryptFile("EncryptFile.py", "DecryptFile.py", key)
 	//Using a goroutine for task processing
