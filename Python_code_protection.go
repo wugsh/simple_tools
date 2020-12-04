@@ -113,12 +113,7 @@ func main() {
 	go RunPython()
 	//Wait for the task to finish processing
 	time.Sleep(time.Second * 5)
-	err := os.Remove("t.py")
-	if err != nil {
-		fmt.Println("Deletion failed")
-	} else {
-        fmt.Println("Deletion succeeded")		
-	}	
+	
 	fmt.Println(num1, num2)
 }
 
@@ -139,4 +134,10 @@ func RunPython() {
 	} else {
 		fmt.Println("succeeded")
 	}
+    err := os.Remove("DecryptFile.py")
+	if err != nil {
+		fmt.Println("Deletion failed")
+	} else {
+        fmt.Println("Deletion succeeded")		
+	}	
 }
