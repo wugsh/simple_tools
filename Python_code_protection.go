@@ -102,7 +102,6 @@ func PKCS5remove(plaintext []byte) []byte {
 
 
 func main() {
-	fmt.Println(syscall.Getpid())
     var PassKey string = "***********************"
     //Generate key
     PassKeyByte :=sha256.Sum224([]byte(PassKey))
@@ -112,32 +111,24 @@ func main() {
 	//Using a goroutine for task processing
 	go RunPython()
 	//Wait for the task to finish processing
-	time.Sleep(time.Second * 5)
-	
+	time.Sleep(time.Second * 1)
+	os.Remove("DecryptFile.py")
 	fmt.Println(num1, num2)
 }
 
 //Execute Python program
 func RunPython() {
 	cmd := exec.Command("python3", "DecryptFile.py")
-	lines,_ := cmd.Output()
 	err2 := cmd.Start()
 	if err2!=nil{
         fmt.Println(err2)
-        os.Exit(1)
-    } else {
-		fmt.Println(string(lines))
-	}
+        os.Remove("DecryptFile.py")
+    } 
 	err3 := cmd.Wait()
 	if err3 !=nil {
 		fmt.Println(err3)
 	} else {
 		fmt.Println("succeeded")
 	}
-    err := os.Remove("DecryptFile.py")
-	if err != nil {
-		fmt.Println("Deletion failed")
-	} else {
-        fmt.Println("Deletion succeeded")		
-	}	
+    os.Remove("DecryptFile.py")
 }
