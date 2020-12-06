@@ -15,7 +15,6 @@ import (
     "crypto/des"
     "crypto/sha256"
 	"encoding/base64"
-	"syscall"
 	"time"
 )
 
@@ -25,11 +24,11 @@ func EncryptFile(fileName string, writfileName string, key []byte) (int, error) 
 	writfile, err1:=os.Create(writfileName)
     if err!=nil {
         fmt.Println("File not found")
-        os.Exit(0)
+        return -1, err
 	}
 	if err1!=nil {
 		fmt.Println("File not found")
-		os.Exit(0)
+		return -1, err1
 	}
 	defer file.Close()
 	defer writfile.Close()
@@ -45,7 +44,7 @@ func EncryptFile(fileName string, writfileName string, key []byte) (int, error) 
     err2:= ioutil.WriteFile(writfileName, []byte(base64.StdEncoding.EncodeToString(plain)), 0777)
     if err2!=nil{
 		fmt.Println("Failed to save encrypted file")
-		return -1, nil
+		return -1, err2
     }else{
 		fmt.Println("The file is encrypted. Remember to encrypt the key")
 		return 0, nil
@@ -59,10 +58,10 @@ func DecryptFile(fileName string, writfileName string, key []byte) (int, error) 
 	writfile, err1:=os.Create(writfileName)
     if err!=nil {
 		fmt.Println("File not found")
-        os.Exit(0)
+        return -1, err
 	}
 	if err1!=nil {
-		os.Exit(0)
+		return -1, err1
 	}
 	defer file.Close()
 	defer writfile.Close()
@@ -119,9 +118,9 @@ func main() {
 //Execute Python program
 func RunPython() {
 	cmd := exec.Command("python3", "DecryptFile.py")
-	err2 := cmd.Start()
-	if err2!=nil{
-        fmt.Println(err2)
+	err := cmd.Start()
+	if err!=nil{
+        fmt.Println(err)
         os.Remove("DecryptFile.py")
     } 
 	err3 := cmd.Wait()
